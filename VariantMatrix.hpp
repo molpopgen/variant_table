@@ -122,6 +122,16 @@ namespace Sequence
         {
             return data + row_size;
         }
+        const dtype*
+        cbegin() const
+        {
+            return data;
+        }
+        const dtype*
+        cend() const
+        {
+            return data + row_size;
+        }
     };
 
     using RowView = _row_view<std::int8_t*>;
