@@ -40,13 +40,12 @@ namespace Sequence
         std::size_t nsam;
 
         template <typename data_input, typename positions_input>
-        VariantMatrix(data_input&& data_, positions_input&& positions_,
-                      const std::size_t nvariants)
+        VariantMatrix(data_input&& data_, positions_input&& positions_)
             : data(std::forward<data_input>(data_)),
               positions(std::forward<positions_input>(positions_)),
-              nsites(nvariants), nsam(data.size() / invariants)
+              nsites(positions.size()), nsam(data.size() / positions.size())
         {
-            if (data.size() % nvariants != 0.0)
+            if (data.size() % positions.size() != 0.0)
                 {
                     throw std::invalid_argument("incorrect dimensions");
                 }
@@ -61,6 +60,14 @@ namespace Sequence
         std::int8_t& at(const std::size_t site, const std::size_t haplotype);
         const std::int8_t& at(const std::size_t site,
                               const std::size_t haplotype) const;
+    };
+
+    struct RowView
+    {
+        std::int8_t * data;
+        std::size_t size;
+        std::int8_t& operator[](const std::size_t i) { return data[i]; }
+        const std::int8_t& operator[](const std::size_t i) const { return data[i]; }
     };
 
     // Rather than have member functions, we will have standalone functions:
