@@ -6,3 +6,4 @@ all: VariantMatrix.o
 	
 
 VariantMatrix.o: VariantMatrix.hpp simpletest.o
+simpletest.o: VariantMatrix.hpp
