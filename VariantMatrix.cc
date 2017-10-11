@@ -30,43 +30,38 @@ namespace Sequence
         return data.at(haplotype * nsam + site);
     }
 
-    ConstRowView
-    get_RowView(const VariantMatrix& m, const std::size_t row)
+    template <typename T, typename VM>
+    T
+    row_view_wrapper(VM& m, const std::size_t row)
     {
         if (row >= m.nsites)
             {
                 throw std::out_of_range("row index out of range");
             }
-        return ConstRowView(m.data.data() + row * m.nsam, m.nsam);
+        return T(m.data.data() + row * m.nsam, m.nsam);
+    }
+
+    ConstRowView
+    get_RowView(const VariantMatrix& m, const std::size_t row)
+    {
+        return row_view_wrapper<ConstRowView>(m, row);
     }
 
     RowView
     get_RowView(VariantMatrix& m, const std::size_t row)
     {
-        if (row >= m.nsites)
-            {
-                throw std::out_of_range("row index out of range");
-            }
-        return RowView(m.data.data() + row * m.nsam, m.nsam);
+        return row_view_wrapper<RowView>(m, row);
     }
 
     ConstRowView
     get_ConstRowView(const VariantMatrix& m, const std::size_t row)
     {
-        if (row >= m.nsites)
-            {
-                throw std::out_of_range("row index out of range");
-            }
-        return ConstRowView(m.data.data() + row * m.nsam, m.nsam);
+        return row_view_wrapper<ConstRowView>(m, row);
     }
 
     ConstRowView
     get_ConstRowView(VariantMatrix& m, const std::size_t row)
     {
-        if (row >= m.nsites)
-            {
-                throw std::out_of_range("row index out of range");
-            }
-        return ConstRowView(m.data.data() + row * m.nsam, m.nsam);
+        return row_view_wrapper<ConstRowView>(m, row);
     }
 }
