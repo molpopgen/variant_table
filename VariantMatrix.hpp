@@ -7,6 +7,7 @@
 #include <vector>
 #include <stdexcept>
 #include <type_traits>
+#include "variant_matrix_internal.hpp"
 
 static_assert(sizeof(std::int8_t) == sizeof(char),
               "sizeof(char) is not 8 bits");
@@ -62,80 +63,8 @@ namespace Sequence
                               const std::size_t haplotype) const;
     };
 
-    template <typename T> struct _row_view
-    {
-        static_assert(std::is_pointer<T>::value, "T must be pointer type");
-        T data;
-        using dtype = typename std::remove_pointer<T>::type;
-        std::size_t row_size;
-
-        _row_view(T data_, std::size_t row_size_)
-            : data(data_), row_size(row_size_)
-        {
-        }
-        inline dtype& operator[](const std::size_t i) { return data[i]; }
-        inline const dtype& operator[](const std::size_t i) const
-        {
-            return data[i];
-        }
-        inline dtype&
-        at(const std::size_t i)
-        {
-            if (i >= row_size)
-                {
-                    throw std::out_of_range("index out of range");
-                }
-            return data[i];
-        }
-        inline const dtype&
-        at(const std::size_t i) const
-        {
-            if (i >= row_size)
-                {
-                    throw std::out_of_range("index out of range");
-                }
-            return data[i];
-        }
-        std::size_t
-        size() const
-        {
-            return row_size;
-        }
-
-        dtype*
-        begin()
-        {
-            return data;
-        }
-        dtype*
-        end()
-        {
-            return data + row_size;
-        }
-        const dtype*
-        begin() const
-        {
-            return data;
-        }
-        const dtype*
-        end() const
-        {
-            return data + row_size;
-        }
-        const dtype*
-        cbegin() const
-        {
-            return data;
-        }
-        const dtype*
-        cend() const
-        {
-            return data + row_size;
-        }
-    };
-
-    using RowView = _row_view<std::int8_t*>;
-    using ConstRowView = _row_view<const std::int8_t*>;
+    using RowView = internal::row_view_<std::int8_t*>;
+    using ConstRowView = internal::row_view_<const std::int8_t*>;
 
     // Rather than have member functions, we will have standalone functions:
 
