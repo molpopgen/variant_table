@@ -53,7 +53,7 @@ namespace Sequence
             }
 
             using iterator = dtype*;
-            using const_iterator = const dtype * ; 
+            using const_iterator = const dtype*;
             using reverse_iterator = std::reverse_iterator<iterator>;
             using const_reverse_iterator
                 = std::reverse_iterator<const_iterator>;
@@ -71,7 +71,7 @@ namespace Sequence
             const_iterator
             begin() const
             {
-				return data;
+                return data;
             }
             const_iterator
             end() const
@@ -167,11 +167,17 @@ namespace Sequence
 
             template <typename POINTER> struct iterator_
             {
-                using difference_type = std::ptrdiff_t;
-                using value_type = dtype;
-                using reference = value_type&;
+                static_assert(std::is_pointer<POINTER>::value,
+                              "iterator must wrap a pointer type");
+                using difference_type =
+                    typename std::iterator_traits<POINTER>::difference_type;
+                using value_type =
+                    typename std::iterator_traits<POINTER>::value_type;
+                using reference =
+                    typename std::iterator_traits<POINTER>::reference;
                 using pointer = POINTER;
-                using iterator_category = std::random_access_iterator_tag;
+                using iterator_category =
+                    typename std::iterator_traits<POINTER>::iterator_category;
 
                 mutable POINTER data;
                 difference_type stride, offset;
@@ -179,12 +185,13 @@ namespace Sequence
                                    difference_type offset_)
                     : data{ data_ }, stride{ stride_ }, offset{ offset_ }
                 {
+                    std::cout << std::is_const<POINTER>::value << ' '
+                              << std::is_const<value_type>::value << '\n';
                 }
-                value_type& operator*() { return *(data + offset); }
-                const value_type& operator*() const
-                {
-                    return *(data + offset);
-                }
+
+                reference operator*() { return *(data + offset); }
+
+                const reference operator*() const { return *(data + offset); }
 
                 iterator_&
                 operator=(const iterator_& rhs)
@@ -251,8 +258,8 @@ namespace Sequence
                 }
             };
 
-            using iterator = iterator_<T>;
-            using const_iterator = iterator_<const T>;
+            using iterator = iterator_<dtype*>;
+            using const_iterator = iterator_<const dtype*>;
             using reverse_iterator = std::reverse_iterator<iterator>;
             using const_reverse_iterator
                 = std::reverse_iterator<const_iterator>;
@@ -288,7 +295,7 @@ namespace Sequence
                 return this->end();
             }
 
-            //Reverse iterators
+            // Reverse iterators
             reverse_iterator
             rbegin()
             {

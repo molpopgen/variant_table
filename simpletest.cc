@@ -86,6 +86,7 @@ main(int argc, char** argv)
         {
             auto x = get_ColView(m, hap);
             auto b = x.cbegin();
+			//*b=1;
             auto e = x.cend();
             for (; b < e; ++b)
                 {
