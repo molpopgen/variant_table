@@ -62,10 +62,10 @@ main(int argc, char** argv)
     for (size_t site = 0; site < m.nsites; ++site)
         {
             auto x = get_RowView(m, site);
-			if(x.size() != m.nsam)
-			{
-				throw std::runtime_error("row size error");
-			}
+            if (x.size() != m.nsam)
+                {
+                    throw std::runtime_error("row size error");
+                }
             for (auto i = x.begin(); i != x.end(); ++i)
                 {
                     if (m.get(site, i - x.begin()) != *i)
@@ -74,16 +74,44 @@ main(int argc, char** argv)
                         }
                 }
         }
-	// Iterate over column views
-	for(size_t hap = 0; hap < m.nsam ; ++hap)
-	{
-		auto x = get_ColView(m,hap);
-		for(size_t i = 0 ; i < x.size() ; ++i)
-		{
-			if(x[i] != like_libseq[hap][i])
-			{
-				throw std::runtime_error("haplotype error");
-			}
-		}
-	}
+    // Iterate over column views
+    for (size_t hap = 0; hap < m.nsam; ++hap)
+        {
+            auto x = get_ColView(m, hap);
+            auto b = x.cbegin();
+            auto e = x.cend();
+            for (; b < e; ++b)
+                {
+                    cout << int(*b);
+                }
+            cout << '\n';
+            auto b2 = x.cbegin();
+            auto e2 = x.cend() - 1;
+            for (; e2 >= b2; --e2)
+                {
+                    cout << int(*e2);
+                }
+            cout << '\n';
+            b2 = x.cbegin();
+            e2 = x.cend() - 1;
+            for (; e2 >= b2; --e2)
+                {
+                    cout << int(*e2);
+                }
+			cout << '\n';
+            // b = x.cbegin();
+            // e = x.cend();
+            // for (; e >= b; --e)
+            //    {
+            //        cout << int(*b);
+            //    }
+            // cout << '\n';
+            for (size_t i = 0; i < x.size(); ++i)
+                {
+                    if (x[i] != like_libseq[hap][i])
+                        {
+                            throw std::runtime_error("haplotype error");
+                        }
+                }
+        }
 }
