@@ -68,8 +68,8 @@ namespace Sequence
     using ColView = internal::col_view_<std::int8_t*>;
     using ConstColView = internal::col_view_<const std::int8_t*>;
 
-    //inline bool
-    //operator<(const ColView::iterator& a, const ColView::iterator& b)
+    // inline bool
+    // operator<(const ColView::iterator& a, const ColView::iterator& b)
     //{
     //    return a.data < b.data;
     //}
@@ -87,6 +87,10 @@ namespace Sequence
     ConstRowView get_ConstRowView(VariantMatrix& m, const std::size_t row);
 
     ColView get_ColView(VariantMatrix& m, const std::size_t col);
+    ConstColView get_ColView(const VariantMatrix& m, const std::size_t col);
+    ConstColView get_ConstColView(VariantMatrix& m, const std::size_t col);
+    ConstColView get_ConstColView(const VariantMatrix& m,
+                                  const std::size_t col);
 }
 
 #endif

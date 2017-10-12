@@ -69,10 +69,10 @@ namespace Sequence
     T
     col_view_wrapper(VM& m, const std::size_t col)
     {
-		if (col >= m.nsam)
-		{
-			throw std::out_of_range("column index out of range");
-		}
+        if (col >= m.nsam)
+            {
+                throw std::out_of_range("column index out of range");
+            }
         return T(m.data.data() + col, m.nsam * m.nsites, m.nsam);
     }
 
@@ -80,5 +80,20 @@ namespace Sequence
     get_ColView(VariantMatrix& m, const std::size_t col)
     {
         return col_view_wrapper<ColView>(m, col);
+    }
+    ConstColView
+    get_ColView(const VariantMatrix& m, const std::size_t col)
+    {
+        return col_view_wrapper<ConstColView>(m, col);
+    }
+    ConstColView
+    get_ConstColView(VariantMatrix& m, const std::size_t col)
+    {
+        return col_view_wrapper<ConstColView>(m, col);
+    }
+    ConstColView
+    get_ConstColView(const VariantMatrix& m, const std::size_t col)
+    {
+        return col_view_wrapper<ConstColView>(m, col);
     }
 }
