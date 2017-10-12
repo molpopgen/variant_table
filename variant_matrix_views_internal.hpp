@@ -53,7 +53,7 @@ namespace Sequence
             }
 
             using iterator = dtype*;
-            using const_iterator = const iterator;
+            using const_iterator = const dtype * ; 
             using reverse_iterator = std::reverse_iterator<iterator>;
             using const_reverse_iterator
                 = std::reverse_iterator<const_iterator>;
@@ -71,7 +71,7 @@ namespace Sequence
             const_iterator
             begin() const
             {
-                return data;
+				return data;
             }
             const_iterator
             end() const
