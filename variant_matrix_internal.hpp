@@ -1,6 +1,7 @@
 #ifndef SEQUENCE_VARIANT_MATRIX_INTERNAL_HPP__
 #define SEQUENCE_VARIANT_MATRIX_INTERNAL_HPP__
 
+#include <iostream>
 #include <iterator>
 #include <cstdint>
 #include <cstddef>
@@ -164,7 +165,7 @@ namespace Sequence
 
             template <typename POINTER> struct iterator_
             {
-                using difference_type = std::int32_t;
+                using difference_type = std::ptrdiff_t;
                 using value_type = dtype;
                 using reference = value_type&;
                 using pointer = POINTER;
@@ -172,8 +173,9 @@ namespace Sequence
 
                 mutable POINTER data;
                 difference_type stride, offset;
-                explicit iterator_(POINTER data_, difference_type stride_)
-                    : data{ data_ }, stride{ stride_ }, offset{ 0 }
+                explicit iterator_(POINTER data_, difference_type stride_,
+                                   difference_type offset_)
+                    : data{ data_ }, stride{ stride_ }, offset{ offset_ }
                 {
                 }
                 value_type& operator*() { return *(data + offset); }
@@ -254,42 +256,42 @@ namespace Sequence
             iterator
             begin()
             {
-                return iterator(data, stride);
+                return iterator(data, stride, 0);
             }
             iterator
             end()
             {
-                return iterator(data + col_end, stride);
+                return iterator(data, stride, col_end);
             }
             reverse_iterator
             rbegin()
             {
-                return reverse_iterator(iterator(data + col_end, stride));
+                return reverse_iterator(iterator(data, stride, col_end));
             }
             reverse_iterator
             rend()
             {
-                return reverse_iterator(iterator(data, stride));
+                return reverse_iterator(iterator(data, stride, 0));
             }
             const_iterator
             begin() const
             {
-                return const_iterator(data, stride);
+                return const_iterator(data, stride, 0);
             }
             const_iterator
             end() const
             {
-                return const_iterator(data + col_end, stride);
+                return const_iterator(data, stride, col_end);
             }
             const_iterator
             cbegin() const
             {
-                return const_iterator(data, stride);
+                return const_iterator(data, stride,0);
             }
             const_iterator
             cend() const
             {
-                return const_iterator(data + col_end, stride);
+                return const_iterator(data , stride, col_end);
             }
         };
     }
