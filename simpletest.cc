@@ -1,4 +1,5 @@
 #include "VariantMatrix.hpp"
+#include "VariantMatrixViews.hpp"
 #include <algorithm>
 #include <stdexcept>
 #include <iostream>
