@@ -68,12 +68,6 @@ namespace Sequence
     using ColView = internal::col_view_<std::int8_t*>;
     using ConstColView = internal::col_view_<const std::int8_t*>;
 
-    // inline bool
-    // operator<(const ColView::iterator& a, const ColView::iterator& b)
-    //{
-    //    return a.data < b.data;
-    //}
-
     // Rather than have member functions, we will have standalone functions:
 
     // The following could (should?) be declared noexcept(false):
