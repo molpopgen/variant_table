@@ -73,12 +73,12 @@ main(int argc, char** argv)
                             throw std::runtime_error("row iteration error");
                         }
                 }
-			cout << "reverse iterate: ";
-			for(auto i = x.rbegin() ; i != x.rend() ; ++i)
-			{
-				cout << int(*i);
-			}
-			cout << '\n';
+            cout << "reverse iterate: ";
+            for (auto i = x.rbegin(); i != x.rend(); ++i)
+                {
+                    cout << int(*i);
+                }
+            cout << '\n';
         }
     // Iterate over column views
     for (size_t hap = 0; hap < m.nsam; ++hap)
@@ -98,21 +98,14 @@ main(int argc, char** argv)
                     cout << int(*e2);
                 }
             cout << '\n';
-			cout << "reverse iterate haplotype: ";
+            cout << "reverse iterate haplotype:\n";
             auto b3 = x.rbegin();
-            auto e3 = x.rend() ;
+            auto e3 = x.rend();
             for (; b3 < e3; ++b3)
                 {
-                    cout << int(*e3);
+					cout << int(*b3);
                 }
 			cout << '\n';
-            // b = x.cbegin();
-            // e = x.cend();
-            // for (; e >= b; --e)
-            //    {
-            //        cout << int(*b);
-            //    }
-            // cout << '\n';
             for (size_t i = 0; i < x.size(); ++i)
                 {
                     if (x[i] != like_libseq[hap][i])
