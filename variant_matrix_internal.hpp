@@ -252,6 +252,8 @@ namespace Sequence
             using iterator = iterator_<T>;
             using const_iterator = iterator_<const T>;
             using reverse_iterator = std::reverse_iterator<iterator>;
+            using const_reverse_iterator
+                = std::reverse_iterator<const_iterator>;
 
             iterator
             begin()
@@ -283,15 +285,37 @@ namespace Sequence
             {
                 return const_iterator(data, stride, col_end);
             }
+            const_reverse_iterator
+            rbegin() const
+            {
+                return const_reverse_iterator(
+                    const_iterator(data, stride, col_end));
+            }
+            const_reverse_iterator
+            rend() const
+            {
+                return const_reverse_iterator(const_terator(data, stride, 0));
+            }
             const_iterator
             cbegin() const
             {
-                return const_iterator(data, stride,0);
+                return const_iterator(data, stride, 0);
             }
             const_iterator
             cend() const
             {
-                return const_iterator(data , stride, col_end);
+                return const_iterator(data, stride, col_end);
+            }
+            const_reverse_iterator
+            crbegin() const
+            {
+                return const_reverse_iterator(
+                    const_iterator(data, stride, col_end));
+            }
+            const_reverse_iterator
+            crend() const
+            {
+                return const_reverse_iterator(const_iterator(data, stride, 0));
             }
         };
     }
