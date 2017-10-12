@@ -1,7 +1,6 @@
 #ifndef SEQUENCE_VARIANT_MATRIX_INTERNAL_HPP__
 #define SEQUENCE_VARIANT_MATRIX_INTERNAL_HPP__
 
-#include <iostream>
 #include <iterator>
 #include <cstdint>
 #include <cstddef>
@@ -185,8 +184,6 @@ namespace Sequence
                                    difference_type offset_)
                     : data{ data_ }, stride{ stride_ }, offset{ offset_ }
                 {
-                    std::cout << std::is_const<POINTER>::value << ' '
-                              << std::is_const<value_type>::value << '\n';
                 }
 
                 reference operator*() { return *(data + offset); }
