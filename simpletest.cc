@@ -98,11 +98,12 @@ main(int argc, char** argv)
                     cout << int(*e2);
                 }
             cout << '\n';
-            b2 = x.cbegin();
-            e2 = x.cend() - 1;
-            for (; e2 >= b2; --e2)
+			cout << "reverse iterate haplotype: ";
+            auto b3 = x.rbegin();
+            auto e3 = x.rend() ;
+            for (; b3 < e3; ++b3)
                 {
-                    cout << int(*e2);
+                    cout << int(*e3);
                 }
 			cout << '\n';
             // b = x.cbegin();

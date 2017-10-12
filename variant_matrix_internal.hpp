@@ -90,12 +90,12 @@ namespace Sequence
             const_reverse_iterator
             rbegin() const
             {
-                return reverse_iterator(data);
+                return reverse_iterator(data + row_size);
             }
             const_reverse_iterator
             rend() const
             {
-                return reverse_iterator(data + row_size);
+                return reverse_iterator(data);
             }
             const_iterator
             cbegin() const
@@ -110,12 +110,12 @@ namespace Sequence
             const_reverse_iterator
             crbegin() const
             {
-                return reverse_iterator(data);
+                return reverse_iterator(data + row_size);
             }
             const_reverse_iterator
             crend() const
             {
-                return reverse_iterator(data + row_size);
+                return reverse_iterator(data);
             }
         };
 
@@ -166,9 +166,13 @@ namespace Sequence
             {
                 using difference_type = std::int32_t;
                 using value_type = dtype;
+                using reference = value_type&;
+                using pointer = POINTER;
+                using iterator_category = std::random_access_iterator_tag;
+
                 mutable POINTER data;
                 difference_type stride, offset;
-                explicit iterator_(T data_, difference_type stride_)
+                explicit iterator_(POINTER data_, difference_type stride_)
                     : data{ data_ }, stride{ stride_ }, offset{ 0 }
                 {
                 }
@@ -245,7 +249,7 @@ namespace Sequence
 
             using iterator = iterator_<T>;
             using const_iterator = iterator_<const T>;
-            // using const_iterator = const iterator;
+            using reverse_iterator = std::reverse_iterator<iterator>;
 
             iterator
             begin()
@@ -256,6 +260,16 @@ namespace Sequence
             end()
             {
                 return iterator(data + col_end, stride);
+            }
+            reverse_iterator
+            rbegin()
+            {
+                return reverse_iterator(iterator(data + col_end, stride));
+            }
+            reverse_iterator
+            rend()
+            {
+                return reverse_iterator(iterator(data, stride));
             }
             const_iterator
             begin() const
