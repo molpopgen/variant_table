@@ -1,6 +1,7 @@
 #ifndef SEQUENCE_VARIANT_MATRIX_INTERNAL_HPP__
 #define SEQUENCE_VARIANT_MATRIX_INTERNAL_HPP__
 
+#include <iterator>
 #include <cstdint>
 #include <cstddef>
 #include <stdexcept>
@@ -50,35 +51,71 @@ namespace Sequence
                 return row_size;
             }
 
-            dtype*
+            using iterator = dtype*;
+            using const_iterator = const iterator;
+            using reverse_iterator = std::reverse_iterator<iterator>;
+            using const_reverse_iterator
+                = std::reverse_iterator<const_iterator>;
+
+            iterator
             begin()
             {
                 return data;
             }
-            dtype*
+            iterator
             end()
             {
                 return data + row_size;
             }
-            const dtype*
+            reverse_iterator
+            rbegin()
+            {
+                return reverse_iterator(data + row_size);
+            }
+            reverse_iterator
+            rend()
+            {
+                return reverse_iterator(data);
+            }
+            const_iterator
             begin() const
             {
                 return data;
             }
-            const dtype*
+            const_iterator
             end() const
             {
                 return data + row_size;
             }
-            const dtype*
+            const_reverse_iterator
+            rbegin() const
+            {
+                return reverse_iterator(data);
+            }
+            const_reverse_iterator
+            rend() const
+            {
+                return reverse_iterator(data + row_size);
+            }
+            const_iterator
             cbegin() const
             {
                 return data;
             }
-            const dtype*
+            const_iterator
             cend() const
             {
                 return data + row_size;
+            }
+            const_reverse_iterator
+            crbegin() const
+            {
+                return reverse_iterator(data);
+            }
+            const_reverse_iterator
+            crend() const
+            {
+                return reverse_iterator(data + row_size);
             }
         };
 

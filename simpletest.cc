@@ -73,6 +73,12 @@ main(int argc, char** argv)
                             throw std::runtime_error("row iteration error");
                         }
                 }
+			cout << "reverse iterate: ";
+			for(auto i = x.rbegin() ; i != x.rend() ; ++i)
+			{
+				cout << int(*i);
+			}
+			cout << '\n';
         }
     // Iterate over column views
     for (size_t hap = 0; hap < m.nsam; ++hap)
