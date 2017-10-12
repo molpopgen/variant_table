@@ -68,16 +68,6 @@ namespace Sequence
             {
                 return data + row_size;
             }
-            reverse_iterator
-            rbegin()
-            {
-                return reverse_iterator(data + row_size);
-            }
-            reverse_iterator
-            rend()
-            {
-                return reverse_iterator(data);
-            }
             const_iterator
             begin() const
             {
@@ -87,6 +77,28 @@ namespace Sequence
             end() const
             {
                 return data + row_size;
+            }
+            const_iterator
+            cbegin() const
+            {
+                return this->begin();
+            }
+            const_iterator
+            cend() const
+            {
+                return this->end();
+            }
+
+            // Reverse iterators
+            reverse_iterator
+            rbegin()
+            {
+                return reverse_iterator(data + row_size);
+            }
+            reverse_iterator
+            rend()
+            {
+                return reverse_iterator(data);
             }
             const_reverse_iterator
             rbegin() const
@@ -98,25 +110,15 @@ namespace Sequence
             {
                 return reverse_iterator(data);
             }
-            const_iterator
-            cbegin() const
-            {
-                return data;
-            }
-            const_iterator
-            cend() const
-            {
-                return data + row_size;
-            }
             const_reverse_iterator
             crbegin() const
             {
-                return reverse_iterator(data + row_size);
+                return this->rbegin();
             }
             const_reverse_iterator
             crend() const
             {
-                return reverse_iterator(data);
+                return this->rend();
             }
         };
 
@@ -265,16 +267,6 @@ namespace Sequence
             {
                 return iterator(data, stride, col_end);
             }
-            reverse_iterator
-            rbegin()
-            {
-                return reverse_iterator(iterator(data, stride, col_end));
-            }
-            reverse_iterator
-            rend()
-            {
-                return reverse_iterator(iterator(data, stride, 0));
-            }
             const_iterator
             begin() const
             {
@@ -285,6 +277,29 @@ namespace Sequence
             {
                 return const_iterator(data, stride, col_end);
             }
+            const_iterator
+            cbegin() const
+            {
+                return this->begin();
+            }
+            const_iterator
+            cend() const
+            {
+                return this->end();
+            }
+
+            //Reverse iterators
+            reverse_iterator
+            rbegin()
+            {
+                return reverse_iterator(iterator(data, stride, col_end));
+            }
+            reverse_iterator
+            rend()
+            {
+                return reverse_iterator(iterator(data, stride, 0));
+            }
+
             const_reverse_iterator
             rbegin() const
             {
@@ -296,26 +311,15 @@ namespace Sequence
             {
                 return const_reverse_iterator(const_terator(data, stride, 0));
             }
-            const_iterator
-            cbegin() const
-            {
-                return const_iterator(data, stride, 0);
-            }
-            const_iterator
-            cend() const
-            {
-                return const_iterator(data, stride, col_end);
-            }
             const_reverse_iterator
             crbegin() const
             {
-                return const_reverse_iterator(
-                    const_iterator(data, stride, col_end));
+                return this->rbegin();
             }
             const_reverse_iterator
             crend() const
             {
-                return const_reverse_iterator(const_iterator(data, stride, 0));
+                return this->rend();
             }
         };
     }
