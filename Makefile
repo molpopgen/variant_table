@@ -5,5 +5,5 @@ all: VariantMatrix.o
 	$(CXX) $(CXXFLAGS) -o simpletest simpletest.o VariantMatrix.o
 	
 
-VariantMatrix.o: VariantMatrix.hpp simpletest.o
-simpletest.o: VariantMatrix.hpp
+VariantMatrix.o: VariantMatrix.hpp variant_matrix_internal.hpp simpletest.o
+simpletest.o: VariantMatrix.hpp  variant_matrix_internal.hpp

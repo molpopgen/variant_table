@@ -74,4 +74,16 @@ main(int argc, char** argv)
                         }
                 }
         }
+	// Iterate over column views
+	for(size_t hap = 0; hap < m.nsam ; ++hap)
+	{
+		auto x = get_ColView(m,hap);
+		for(size_t i = 0 ; i < x.size() ; ++i)
+		{
+			if(x[i] != like_libseq[hap][i])
+			{
+				throw std::runtime_error("haplotype error");
+			}
+		}
+	}
 }

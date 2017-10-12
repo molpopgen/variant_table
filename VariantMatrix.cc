@@ -64,4 +64,21 @@ namespace Sequence
     {
         return row_view_wrapper<ConstRowView>(m, row);
     }
+
+    template <typename T, typename VM>
+    T
+    col_view_wrapper(VM& m, const std::size_t col)
+    {
+		if (col >= m.nsam)
+		{
+			throw std::out_of_range("column index out of range");
+		}
+        return T(m.data.data() + col, m.nsam * m.nsites, m.nsam);
+    }
+
+    ColView
+    get_ColView(VariantMatrix& m, const std::size_t col)
+    {
+        return col_view_wrapper<ColView>(m, col);
+    }
 }

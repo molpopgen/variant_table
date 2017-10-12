@@ -65,6 +65,8 @@ namespace Sequence
 
     using RowView = internal::row_view_<std::int8_t*>;
     using ConstRowView = internal::row_view_<const std::int8_t*>;
+    using ColView = internal::col_view_<std::int8_t*>;
+    using ConstColView = internal::col_view_<const std::int8_t*>;
 
     // Rather than have member functions, we will have standalone functions:
 
@@ -77,6 +79,8 @@ namespace Sequence
                                   const std::size_t row);
 
     ConstRowView get_ConstRowView(VariantMatrix& m, const std::size_t row);
+
+    ColView get_ColView(VariantMatrix& m, const std::size_t col);
 }
 
 #endif
