@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <cstddef>
 #include <stdexcept>
+#include <vector>
 #include <type_traits>
 
 namespace Sequence
@@ -119,6 +120,13 @@ namespace Sequence
             {
                 return this->rend();
             }
+
+            std::vector<std::int8_t>
+            copy() const
+            {
+                return std::vector<std::int8_t>(this->cbegin(), this->cend());
+            }
+
             friend void
             swap(row_view_& a, row_view_& b)
             {
@@ -333,6 +341,13 @@ namespace Sequence
             {
                 return this->rend();
             }
+
+            std::vector<std::int8_t>
+            copy() const
+            {
+                return std::vector<std::int8_t>(this->cbegin(), this->cend());
+            }
+
             friend void
             swap(col_view_& a, col_view_& b)
             {
