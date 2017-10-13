@@ -5,6 +5,7 @@
 #include <cstddef>
 #include <utility>
 #include <vector>
+#include <limits>
 #include <stdexcept>
 #include <type_traits>
 
@@ -38,6 +39,7 @@ namespace Sequence
         std::vector<double> positions;
         std::size_t nsites;
         std::size_t nsam;
+        static const std::int8_t mask;
 
         template <typename data_input, typename positions_input>
         VariantMatrix(data_input&& data_, positions_input&& positions_)

@@ -3,6 +3,7 @@
 
 namespace Sequence
 {
+	const std::int8_t VariantMatrix::mask=std::numeric_limits<std::int8_t>::min();
     // Non range-checked access
     std::int8_t&
     VariantMatrix::get(const std::size_t site, const std::size_t haplotype)
