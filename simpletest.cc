@@ -8,25 +8,26 @@
 using namespace Sequence;
 using namespace std;
 
-void single_site_test()
+void
+single_site_test()
 {
-	vector<double> pos{1};
-	vector<int8_t> data{0,1};
-	VariantMatrix m(move(data),move(pos));
-	for(size_t site = 0 ; site < m.nsites ; ++site)
-	{
-		for(size_t h=0;h<m.nsam;++h)
-		{
-			auto g = m.at(site,h);
-		}
-	}
-	cout << "pass single site test\n";
+    vector<double> pos{ 1 };
+    vector<int8_t> data{ 0, 1 };
+    VariantMatrix m(move(data), move(pos));
+    for (size_t site = 0; site < m.nsites; ++site)
+        {
+            for (size_t h = 0; h < m.nsam; ++h)
+                {
+                    auto g = m.at(site, h);
+                }
+        }
+    cout << "pass single site test\n";
 }
 
 int
 main(int argc, char** argv)
 {
-	single_site_test();
+    single_site_test();
 
     // Construct two haplotypes
     vector<int8_t> hap1{ 0, 1, 1, 0 };
@@ -151,16 +152,33 @@ main(int argc, char** argv)
     cout << '\n';
 
     cout << "Site removal test:\n";
+    auto mcopy = m;
     auto nremoved = filter_sites(m, [](const RowView& row) {
         return count(row.begin(), row.end(), 1) < 2;
     });
-	cout << nremoved << ' ' << m.nsites << ' ' << m.nsam << ' ' << m.data.size() << '\n';
-	for(size_t site=0;site < m.nsites ; ++site)
+    cout << nremoved << ' ' << m.nsites << ' ' << m.nsam << ' '
+         << m.data.size() << '\n';
+    for (size_t site = 0; site < m.nsites; ++site)
+        {
+            cout << m.positions[site] << '\n';
+            for (size_t h = 0; h < m.nsam; ++h)
+                {
+                    cout << int(m.at(site, h)) << '\n';
+                }
+        }
+    m = move(mcopy);
+    cout << "Haplotype removal test:\n";
+    nremoved = filter_haplotypes(m, [](const ColView& col) {
+        return count(col.begin(), col.end(), 1) < 3;
+    });
+    cout << nremoved << ' ' << m.nsites << ' ' << m.nsam << ' '
+         << m.data.size() << '\n';
+	for(size_t i=0;i<m.nsam;++i)
 	{
-		cout << m.positions[site] << '\n';
-		for(size_t h = 0 ; h < m.nsam ; ++h)
+		for(size_t j = 0 ; j < m.nsites ; ++j)
 		{
-			cout << int(m.at(site,h)) << '\n';
+			cout << int(m.at(j,i));
 		}
+		cout << '\n';
 	}
 }

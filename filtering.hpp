@@ -8,9 +8,11 @@
 
 namespace Sequence
 {
+    std::int32_t filter_sites(VariantMatrix &m,
+                              const std::function<bool(const RowView &)> &f);
     std::int32_t
-    filter_sites(VariantMatrix &m,
-                 const std::function<bool(const RowView &)> &f);
+    filter_haplotypes(VariantMatrix &m,
+                      const std::function<bool(const ColView &)> &f);
 }
 
 #endif
