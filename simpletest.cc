@@ -8,9 +8,26 @@
 using namespace Sequence;
 using namespace std;
 
+void single_site_test()
+{
+	vector<double> pos{1};
+	vector<int8_t> data{0,1};
+	VariantMatrix m(move(data),move(pos));
+	for(size_t site = 0 ; site < m.nsites ; ++site)
+	{
+		for(size_t h=0;h<m.nsam;++h)
+		{
+			auto g = m.at(site,h);
+		}
+	}
+	cout << "pass single site test\n";
+}
+
 int
 main(int argc, char** argv)
 {
+	single_site_test();
+
     // Construct two haplotypes
     vector<int8_t> hap1{ 0, 1, 1, 0 };
     vector<int8_t> hap2{ 1, 0, 1, 1 };
