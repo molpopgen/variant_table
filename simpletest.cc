@@ -1,5 +1,6 @@
 #include "VariantMatrix.hpp"
 #include "VariantMatrixViews.hpp"
+#include "filtering.hpp"
 #include <algorithm>
 #include <stdexcept>
 #include <iostream>
@@ -86,7 +87,7 @@ main(int argc, char** argv)
         {
             auto x = get_ColView(m, hap);
             auto b = x.cbegin();
-			//*b=1;
+            //*b=1;
             auto e = x.cend();
             for (; b < e; ++b)
                 {
@@ -105,9 +106,9 @@ main(int argc, char** argv)
             auto e3 = x.rend();
             for (; b3 < e3; ++b3)
                 {
-					cout << int(*b3);
+                    cout << int(*b3);
                 }
-			cout << '\n';
+            cout << '\n';
             for (size_t i = 0; i < x.size(); ++i)
                 {
                     if (x[i] != like_libseq[hap][i])
@@ -116,17 +117,34 @@ main(int argc, char** argv)
                         }
                 }
         }
-	auto c0 = get_ColView(m,0),c1 = get_ColView(m,1);
-	cout << "Swap test:\n";
-	for(auto & i : c0) cout << int(i);
-	cout << '\n';
-	for(auto & i : c1) cout << int(i);
-	cout << '\n';
-	swap(c0,c1);
-	for(auto & i : c0) cout << int(i);
-	cout << '\n';
-	for(auto & i : c1) cout << int(i);
-	cout << '\n';
+    auto c0 = get_ColView(m, 0), c1 = get_ColView(m, 1);
+    cout << "Swap test:\n";
+    for (auto& i : c0)
+        cout << int(i);
+    cout << '\n';
+    for (auto& i : c1)
+        cout << int(i);
+    cout << '\n';
+    swap(c0, c1);
+    for (auto& i : c0)
+        cout << int(i);
+    cout << '\n';
+    for (auto& i : c1)
+        cout << int(i);
+    cout << '\n';
+
+    cout << "Site removal test:\n";
+    auto nremoved = filter_sites(m, [](const RowView& row) {
+        return count(row.begin(), row.end(), 1) < 2;
+    });
+	cout << nremoved << ' ' << m.nsites << ' ' << m.nsam << ' ' << m.data.size() << '\n';
+	for(size_t site=0;site < m.nsites ; ++site)
+	{
+		cout << m.positions[site] << '\n';
+		for(size_t h = 0 ; h < m.nsam ; ++h)
+		{
+			std::cout << "h = " << h << '\n';
+			cout << int(m.at(site,h)) << '\n';
+		}
+	}
 }
-
-

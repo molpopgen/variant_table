@@ -1,4 +1,5 @@
 #include "VariantMatrix.hpp"
+#include <iostream>
 
 namespace Sequence
 {
@@ -20,6 +21,7 @@ namespace Sequence
     std::int8_t&
     VariantMatrix::at(const std::size_t site, const std::size_t haplotype)
     {
+		std::cout << "check: " << data.size() << ' ' << nsam << ' ' << haplotype << ' ' << site <<  ' ' << haplotype*nsam + site << '\n';
         return data.at(haplotype * nsam + site);
     }
 
