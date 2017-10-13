@@ -11,8 +11,9 @@ namespace Sequence
     filter_common(
         VariantMatrix &m, const std::function<bool(const T &)> &f,
         const std::function<T(VariantMatrix &, const std::size_t)> &viewmaker,
-        const bool remove_pos,  std::size_t & dim)
+        std::size_t &dim)
     {
+        constexpr auto remove_pos = std::is_same<T, RowView>::value;
         std::int32_t rv = 0;
         for (std::size_t i = 0; i < dim; ++i)
             {
@@ -55,7 +56,7 @@ namespace Sequence
         return filter_common<RowView>(
             m, f, [](VariantMatrix &m,
                      const std::size_t i) { return get_RowView(m, i); },
-            true, m.nsites);
+            m.nsites);
     }
 
     std::int32_t
@@ -65,6 +66,6 @@ namespace Sequence
         return filter_common<ColView>(
             m, f, [](VariantMatrix &m,
                      const std::size_t i) { return get_ColView(m, i); },
-            false, m.nsam);
+            m.nsam);
     }
 }
