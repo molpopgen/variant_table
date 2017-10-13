@@ -119,6 +119,15 @@ namespace Sequence
             {
                 return this->rend();
             }
+            friend void
+            swap(row_view_& a, row_view_& b)
+            {
+                auto bi = b.begin();
+                for (auto ai = a.begin(); ai != a.end(); ++ai, ++bi)
+                    {
+                        std::swap(*ai, *bi);
+                    }
+            }
         };
 
         template <typename T> struct col_view_
@@ -254,7 +263,6 @@ namespace Sequence
                     return !(*this == rhs);
                 }
             };
-
             using iterator = iterator_<dtype*>;
             using const_iterator = iterator_<const dtype*>;
             using reverse_iterator = std::reverse_iterator<iterator>;
@@ -324,6 +332,15 @@ namespace Sequence
             crend() const
             {
                 return this->rend();
+            }
+            friend void
+            swap(col_view_& a, col_view_& b)
+            {
+                auto bi = b.begin();
+                for (auto ai = a.begin(); ai != a.end(); ++ai, ++bi)
+                    {
+                        std::swap(*ai, *bi);
+                    }
             }
         };
     }

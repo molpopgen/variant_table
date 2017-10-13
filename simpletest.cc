@@ -116,4 +116,17 @@ main(int argc, char** argv)
                         }
                 }
         }
+	auto c0 = get_ColView(m,0),c1 = get_ColView(m,1);
+	cout << "Swap test:\n";
+	for(auto & i : c0) cout << int(i);
+	cout << '\n';
+	for(auto & i : c1) cout << int(i);
+	cout << '\n';
+	swap(c0,c1);
+	for(auto & i : c0) cout << int(i);
+	cout << '\n';
+	for(auto & i : c1) cout << int(i);
+	cout << '\n';
 }
+
+
