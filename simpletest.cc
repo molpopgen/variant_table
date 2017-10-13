@@ -160,7 +160,6 @@ main(int argc, char** argv)
 		cout << m.positions[site] << '\n';
 		for(size_t h = 0 ; h < m.nsam ; ++h)
 		{
-			std::cout << "h = " << h << '\n';
 			cout << int(m.at(site,h)) << '\n';
 		}
 	}
