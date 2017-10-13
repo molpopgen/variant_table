@@ -32,6 +32,8 @@ namespace Sequence
     /// The only reserved character state is
     /// std::numeric_limits<std::int8_t>::min(),
     /// which is used to represent masked data.
+    /// That reserved value is VariantMatrix::mask,
+    /// which is a static constant.
     ///
     /// \version 1.9.2
     {
