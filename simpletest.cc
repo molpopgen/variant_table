@@ -4,9 +4,47 @@
 #include <algorithm>
 #include <stdexcept>
 #include <iostream>
+#include <gsl/gsl_matrix_char.h>
 
 using namespace Sequence;
 using namespace std;
+
+void
+gsl_test()
+{
+    vector<double> pos;
+    vector<int8_t> data;
+    size_t nsam = 50;
+    size_t nsites = 500;
+    for (size_t i = 0; i < nsam * nsites; ++i)
+        {
+            data.push_back(i); // yes, this will overflow a lot
+        }
+    for (size_t i = 0; i < nsites; ++i)
+        pos.push_back(i);
+    auto gview = gsl_matrix_char_view_array_with_tda(
+        reinterpret_cast<char*>(data.data()), nsites, nsam, nsam);
+
+    VariantMatrix m(data, pos);
+
+    if (m.nsites != gview.matrix.size1 || m.nsam != gview.matrix.size2)
+        {
+            throw runtime_error("dimension mismatch");
+        }
+    for (size_t site = 0; site < m.nsites; ++site)
+        {
+            for (size_t hap = 0; hap < m.nsam; ++hap)
+                {
+                    auto from_gview = static_cast<int8_t>(
+                        gsl_matrix_char_get(&gview.matrix, site, hap));
+                    auto from_matrix = m.at(site, hap);
+                    if (from_gview != from_matrix)
+                        {
+                            throw runtime_error("value mismatch");
+                        }
+                }
+        }
+}
 
 void
 single_site_test()
@@ -28,7 +66,7 @@ int
 main(int argc, char** argv)
 {
     single_site_test();
-
+    gsl_test();
     // Construct two haplotypes
     vector<int8_t> hap1{ 0, 1, 1, 0 };
     vector<int8_t> hap2{ 1, 0, 1, 1 };
@@ -173,12 +211,12 @@ main(int argc, char** argv)
     });
     cout << nremoved << ' ' << m.nsites << ' ' << m.nsam << ' '
          << m.data.size() << '\n';
-	for(size_t i=0;i<m.nsam;++i)
-	{
-		for(size_t j = 0 ; j < m.nsites ; ++j)
-		{
-			cout << int(m.at(j,i));
-		}
-		cout << '\n';
-	}
+    for (size_t i = 0; i < m.nsam; ++i)
+        {
+            for (size_t j = 0; j < m.nsites; ++j)
+                {
+                    cout << int(m.at(j, i));
+                }
+            cout << '\n';
+        }
 }
