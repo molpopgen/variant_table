@@ -1,6 +1,7 @@
 #include "VariantMatrix.hpp"
 #include "VariantMatrixViews.hpp"
 #include "filtering.hpp"
+#include "statecounts.hpp"
 #include <algorithm>
 #include <stdexcept>
 #include <iostream>
@@ -62,6 +63,20 @@ single_site_test()
     cout << "pass single site test\n";
 }
 
+void
+statecount_test(const VariantMatrix& m)
+{
+    auto c = process_variable_sites(m);
+    for (auto& ci : c)
+        {
+            for (auto&& cii : ci.counts)
+                {
+                    cout << int(cii.first) << ' ' << cii.second << '\n';
+                }
+			cout << "----\n";
+        }
+}
+
 int
 main(int argc, char** argv)
 {
@@ -98,6 +113,7 @@ main(int argc, char** argv)
         {
             throw runtime_error("length of positions vector is wrong");
         }
+    statecount_test(m);
     for (size_t i = 0; i < m.nsam; ++i)
         {
             for (size_t j = 0; j < m.nsites; ++j)
