@@ -81,9 +81,9 @@ statecount_test(const VariantMatrix& m)
 void
 hapcount_test()
 {
-    vector<int8_t> hap1( 10, 1 );
-    vector<int8_t> hap2( 10, 0 );
-    vector<int8_t> hap3( 10, 2 );
+    vector<int8_t> hap1(10, 1);
+    vector<int8_t> hap2(10, 0);
+    vector<int8_t> hap3(10, 2);
 
     vector<double> pos(10, 0.0); // dummy
     vector<int8_t> data;
@@ -100,7 +100,7 @@ hapcount_test()
         }
     data.insert(data.end(), hap3.begin(), hap3.end());
     auto gview = gsl_matrix_char_view_array_with_tda(
-        reinterpret_cast<char*>(data.data()),11,10,10); 
+        reinterpret_cast<char*>(data.data()), 11, 10, 10);
     auto transpose
         = gsl_matrix_char_alloc(gview.matrix.size2, gview.matrix.size1);
     auto check = gsl_matrix_char_transpose_memcpy(transpose, &gview.matrix);
