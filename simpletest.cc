@@ -2,6 +2,7 @@
 #include "VariantMatrixViews.hpp"
 #include "filtering.hpp"
 #include "statecounts.hpp"
+#include "hapcounts.hpp"
 #include <algorithm>
 #include <stdexcept>
 #include <iostream>
@@ -73,8 +74,50 @@ statecount_test(const VariantMatrix& m)
                 {
                     cout << int(cii.first) << ' ' << cii.second << '\n';
                 }
-			cout << "----\n";
+            cout << "----\n";
         }
+}
+
+void
+hapcount_test()
+{
+    vector<int8_t> hap1( 10, 1 );
+    vector<int8_t> hap2( 10, 0 );
+    vector<int8_t> hap3( 10, 2 );
+
+    vector<double> pos(10, 0.0); // dummy
+    vector<int8_t> data;
+    for (int i = 0; i < 10; ++i)
+        {
+            if (i % 2 == 0.)
+                {
+                    data.insert(data.end(), hap1.begin(), hap1.end());
+                }
+            else
+                {
+                    data.insert(data.end(), hap2.begin(), hap2.end());
+                }
+        }
+    data.insert(data.end(), hap3.begin(), hap3.end());
+    auto gview = gsl_matrix_char_view_array_with_tda(
+        reinterpret_cast<char*>(data.data()),11,10,10); 
+    auto transpose
+        = gsl_matrix_char_alloc(gview.matrix.size2, gview.matrix.size1);
+    auto check = gsl_matrix_char_transpose_memcpy(transpose, &gview.matrix);
+    if (check)
+        {
+            throw runtime_error("transpose failed");
+        }
+    vector<int8_t> data2(transpose->data,
+                         transpose->data
+                             + transpose->size1 * transpose->size2);
+    VariantMatrix m(data2, pos);
+    auto hapcounts = haplotype_counts(m);
+    for (auto& hi : hapcounts)
+        {
+            cout << hi.first << ' ' << hi.second << '\n';
+        }
+    cout << "done with hapcount test\n";
 }
 
 int
@@ -82,6 +125,7 @@ main(int argc, char** argv)
 {
     single_site_test();
     gsl_test();
+    hapcount_test();
     // Construct two haplotypes
     vector<int8_t> hap1{ 0, 1, 1, 0 };
     vector<int8_t> hap2{ 1, 0, 1, 1 };
