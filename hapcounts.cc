@@ -22,7 +22,7 @@ namespace Sequence
     }
 
     vector<pair<size_t, uint32_t>>
-    haplotype_counts(const VariantMatrix& m)
+    unique_haplotype_counts(const VariantMatrix& m)
     {
         // Step 1: flag each row view as unique or not.
         // We do NOT allow missing data to cause a difference.

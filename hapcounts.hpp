@@ -13,7 +13,7 @@ namespace Sequence
                            const ConstColView& row_j);
 
     std::vector<std::pair<std::size_t, std::uint32_t>>
-    haplotype_counts(const VariantMatrix& m);
+    unique_haplotype_counts(const VariantMatrix& m);
 }
 
 #endif

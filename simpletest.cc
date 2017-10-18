@@ -112,7 +112,7 @@ hapcount_test()
                          transpose->data
                              + transpose->size1 * transpose->size2);
     VariantMatrix m(data2, pos);
-    auto hapcounts = haplotype_counts(m);
+    auto hapcounts = unique_haplotype_counts(m);
     for (auto& hi : hapcounts)
         {
             cout << hi.first << ' ' << hi.second << '\n';
