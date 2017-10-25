@@ -15,7 +15,6 @@ static_assert(sizeof(std::int8_t) == sizeof(char),
 namespace Sequence
 {
     struct VariantMatrix
-    ///
     /// Matrix representation of variation data.
     /// The data structure is a row-major matrix.
     /// Variants are represented by 8-bit integers.
@@ -37,14 +36,20 @@ namespace Sequence
     ///
     /// \version 1.9.2
     {
+        /// Data stored in matrix form with rows as sites.
         std::vector<std::int8_t> data;
+        /// Position of sites.
         std::vector<double> positions;
+        /// Number of sites in data set.
         std::size_t nsites;
+        /// Sample size of data set.
         std::size_t nsam;
+        /// Reserved value for masked data
         static const std::int8_t mask;
 
         template <typename data_input, typename positions_input>
         VariantMatrix(data_input&& data_, positions_input&& positions_)
+        /// "Perfect-forwarding" constructor
             : data(std::forward<data_input>(data_)),
               positions(std::forward<positions_input>(positions_)),
               nsites(positions.size()), nsam(data.size() / positions.size())
@@ -56,12 +61,21 @@ namespace Sequence
         }
 
         // Non range-checked access
+
+        /// \brief Get data from marker `site` and haplotype `haplotype`.
+        /// No range-checking is done.
         std::int8_t& get(const std::size_t site, const std::size_t haplotype);
+        /// \brief Get data from marker `site` and haplotype `haplotype`.
+        /// No range-checking is done.
         const std::int8_t& get(const std::size_t site,
                                const std::size_t haplotype) const;
 
         // Ranged-checked access after std::vector<T>::at.
+        /// \brief Get data from marker `site` and haplotype `haplotype`.
+        /// std::out_of_range is thrown if indexes are invalid.
         std::int8_t& at(const std::size_t site, const std::size_t haplotype);
+        /// \brief Get data from marker `site` and haplotype `haplotype`.
+        /// std::out_of_range is thrown if indexes are invalid.
         const std::int8_t& at(const std::size_t site,
                               const std::size_t haplotype) const;
     };
