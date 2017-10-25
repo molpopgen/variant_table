@@ -49,10 +49,14 @@ namespace Sequence
 
         template <typename data_input, typename positions_input>
         VariantMatrix(data_input&& data_, positions_input&& positions_)
-        /// "Perfect-forwarding" constructor
+            /// \brief "Perfect-forwarding" constructor.
+            ///
+            /// std::invalid_argument will be thrown if
+            /// data.size() % positions.size() != 0.0.
             : data(std::forward<data_input>(data_)),
               positions(std::forward<positions_input>(positions_)),
-              nsites(positions.size()), nsam(data.size() / positions.size())
+              nsites(positions.size()),
+              nsam(data.size() / positions.size())
         {
             if (data.size() % positions.size() != 0.0)
                 {
