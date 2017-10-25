@@ -10,6 +10,7 @@ namespace Sequence
     struct StateCounts
     {
         std::unordered_map<std::int8_t, std::uint32_t> counts;
+        std::uint32_t n;
         std::int8_t refstate;
         StateCounts(const ConstRowView& r,
                     const std::int8_t refstate_ = -1);

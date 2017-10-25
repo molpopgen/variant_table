@@ -5,7 +5,7 @@ namespace Sequence
 {
     StateCounts::StateCounts(const ConstRowView& r,
                              const std::int8_t refstate_)
-        : counts{}, refstate(refstate_)
+        : counts{}, n{ 0u }, refstate(refstate_)
     {
         for (auto i : r)
             {
@@ -26,6 +26,13 @@ namespace Sequence
                         itr->second++;
                     }
             }
+        for(const auto & ci : counts)
+        {
+            if(ci.first >= 0)
+            {
+                n += ci.second;
+            }
+        }
     }
 
     std::vector<StateCounts>

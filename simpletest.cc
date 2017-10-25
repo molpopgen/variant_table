@@ -1,8 +1,11 @@
+#include <Sequence/SimData.hpp>
+#include <Sequence/PolySIM.hpp>
 #include "VariantMatrix.hpp"
 #include "VariantMatrixViews.hpp"
 #include "filtering.hpp"
 #include "statecounts.hpp"
 #include "hapcounts.hpp"
+#include "thetapi.hpp"
 #include <algorithm>
 #include <stdexcept>
 #include <iostream>
@@ -76,6 +79,18 @@ statecount_test(const VariantMatrix& m)
                 }
             cout << "----\n";
         }
+}
+
+void thetapi_test(const VariantMatrix & m)
+{
+	auto x = process_variable_sites(m);
+	auto pi = thetapi(x);
+
+	std::vector<std::string> data{{"0110"},{"1101"}};
+
+	SimData d(m.positions,data);
+	PolySIM ad(&d);
+	cout << "pi = " << pi << ' ' << ad.ThetaPi() << '\n';
 }
 
 void
@@ -158,6 +173,7 @@ main(int argc, char** argv)
             throw runtime_error("length of positions vector is wrong");
         }
     statecount_test(m);
+	thetapi_test(m);
     for (size_t i = 0; i < m.nsam; ++i)
         {
             for (size_t j = 0; j < m.nsites; ++j)
