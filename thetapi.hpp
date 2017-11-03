@@ -6,6 +6,7 @@
 namespace Sequence
 {
     double thetapi(const std::vector<StateCounts> & sc);
+    double thetapi(const std::vector<StateCounts> & sc, int nthreads);
 };
 
 #endif

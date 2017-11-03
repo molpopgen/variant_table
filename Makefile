@@ -1,6 +1,6 @@
 CPPFLAGS=-std=c++11 
-CXXFLAGS=-std=c++11 -O3 -Wall -W
-LDFLAGS=-Wl,-rpath,$(HOME)/anaconda3/lib
+CXXFLAGS=-std=c++11 -O3 -Wall -W -pthread
+LDFLAGS=-Wl,-rpath,$(HOME)/anaconda3/lib -pthread
 
 all: VariantMatrix.o VariantMatrixViews.o simpletest.o filtering.o statecounts.o hapcounts.o thetapi.o
 	$(CXX) $(CXXFLAGS) -o simpletest simpletest.o VariantMatrix.o VariantMatrixViews.o filtering.o statecounts.o hapcounts.o thetapi.o $(LDFLAGS) -lgsl -lgslcblas -lsequence

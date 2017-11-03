@@ -85,12 +85,15 @@ void thetapi_test(const VariantMatrix & m)
 {
 	auto x = process_variable_sites(m);
 	auto pi = thetapi(x);
+	auto pi2 = thetapi(x,2);
+	auto pi3 = thetapi(x,3);
+	auto pi4 = thetapi(x,4);
 
 	std::vector<std::string> data{{"0110"},{"1101"}};
 
 	SimData d(m.positions,data);
 	PolySIM ad(&d);
-	cout << "pi = " << pi << ' ' << ad.ThetaPi() << '\n';
+	cout << "pi = " << pi << ' ' << pi2 << ' ' << pi3 << ' ' << pi4 << ' ' << ad.ThetaPi() << '\n';
 }
 
 void
